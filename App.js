@@ -133,7 +133,7 @@ export default function App() {
                 
                 {/* Botão de exclusão */}
                 <TouchableOpacity onPress={() => handleExcluir(item.id)}>
-                  <Text style={{ fontSize: 16 }}>❌</Text>
+                  <Text style={{ fontSize: 16 }}>X</Text>
                 </TouchableOpacity>
               </View>
             </View>
