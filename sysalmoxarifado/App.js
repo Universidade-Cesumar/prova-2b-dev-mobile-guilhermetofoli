@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, FlatList, ActivityIndicator } from 'react-native';
 
+
 // URL da MockAPI
 const API_URL = 'https://6a2b348eb687a7d5cbc4f232.mockapi.io/api/v1/materiais';
 
@@ -11,6 +12,7 @@ export default function App() {
   const [quantidade, setQuantidade] = useState('');
   const [loading, setLoading] = useState(false);
   const [valoresAjuste, setValoresAjuste] = useState({});
+  const [idEmEdicao, setIdEmEdicao] = useState(null);
 
   // --- Funções de Requisição e Efeitos ---
 
@@ -32,40 +34,54 @@ export default function App() {
     getMateriais();
   }, []);
 
- // POST - Cadastrar material
+ // POST / PUT - Cadastrar ou Editar material
   const handleCadastro = async () => {
     if (!nome || !quantidade) {
       alert("Preencha todos os campos!");
       return;
     }
 
-    if (isNaN(Number(quantidade))) {
-      alert("A quantidade deve ser apenas números!");
+    if (isNaN(Number(quantidade)) || Number(quantidade) < 0) {
+      alert("Digite uma quantidade válida!");
       return;
     }
 
     try {
-      const response = await fetch(API_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          nome: nome,
-          quantidade: Number(quantidade) // Força virar número pra API
-        })
-      });
+      if (idEmEdicao) {
+        // --- MODO EDIÇÃO (PUT) ---
+        const response = await fetch(`${API_URL}/${idEmEdicao}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ nome: nome, quantidade: Number(quantidade) })
+        });
 
-      if (response.ok) {
-        setNome('');
-        setQuantidade('');
-        getMateriais(); // Atualiza a lista após postar
+        if (response.ok) {
+          alert("Material atualizado com sucesso!");
+          setIdEmEdicao(null); // Sai do modo edição
+          setNome('');
+          setQuantidade('');
+          getMateriais();
+        }
+      } else {
+        // --- MODO CADASTRO (POST) ---
+        const response = await fetch(API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ nome: nome, quantidade: Number(quantidade) })
+        });
+
+        if (response.ok) {
+          setNome('');
+          setQuantidade('');
+          alert("Material cadastrado com sucesso!");
+          getMateriais();
+        }
       }
     } catch (err) {
-      console.log("Erro no POST:", err);
+      console.log("Erro no salvar:", err);
     }
   };
-
+  
   // DELETE - Excluir material
   const handleExcluir = async (id) => {
     try {
@@ -163,7 +179,7 @@ export default function App() {
       {loading ? (
         <ActivityIndicator size="small" color="#000" />
       ) : (
-        <FlatList
+       <FlatList
           testID="lista-materiais"
           data={materiais}
           keyExtractor={(item) => item.id}
@@ -172,8 +188,19 @@ export default function App() {
 
             return (
               <View style={styles.itemRow}>
+                {/* Lado Esquerdo: Nome (Clicável) e Quantidade de Estoque */}
                 <View style={{ flex: 1 }}>
-                  <Text style={styles.itemText}>{item.nome}</Text>
+                  {/* Novo: Ao clicar no texto do nome, joga os dados para o formulário do topo entrar em modo de edição */}
+                  <TouchableOpacity onPress={() => {
+                    setIdEmEdicao(item.id);
+                    setNome(item.nome);
+                    setQuantidade(String(item.quantidade));
+                  }}>
+                    <Text style={[styles.itemText, { color: '#007bff', textDecorationLine: 'underline' }]}>
+                      {item.nome} 📝
+                    </Text>
+                  </TouchableOpacity>
+                  
                   <Text style={[
                     styles.itemText, 
                     { fontSize: 14, marginTop: 4 },
@@ -183,6 +210,7 @@ export default function App() {
                   </Text>
                 </View>
                 
+                {/* Lado Direito: Controles de movimentação (+ / -) e Exclusão */}
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   {/* Botão de Diminuir (-) */}
                   <TouchableOpacity 
