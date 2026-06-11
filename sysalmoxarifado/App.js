@@ -74,14 +74,19 @@ export default function App() {
     }
   };
 
-  // PUT - Alterar a quantidade (Adicionar ou Subtrair)
+ // PUT - Alterar a quantidade (Adicionar ou Subtrair)
   const alterarQuantidade = async (item, mudanca) => {
     const novaQuantidade = item.quantidade + mudanca;
 
-    // Evita que o estoque fique negativo nas saídas
+    // Evita que o estoque fique abaixo de zero nas saídas
     if (novaQuantidade < 0) {
       alert("Estoque já está zerado!");
       return;
+    }
+
+    // NOVO: Avisa a Camila em tempo real que o insumo acabou
+    if (novaQuantidade === 0) {
+      alert(`Atenção: O estoque do material "${item.nome}" acabou de zerar!`);
     }
 
     try {
