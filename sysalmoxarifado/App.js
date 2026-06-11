@@ -179,7 +179,7 @@ export default function App() {
       {loading ? (
         <ActivityIndicator size="small" color="#000" />
       ) : (
-       <FlatList
+      <FlatList
           testID="lista-materiais"
           data={materiais}
           keyExtractor={(item) => item.id}
@@ -188,18 +188,24 @@ export default function App() {
 
             return (
               <View style={styles.itemRow}>
-                {/* Lado Esquerdo: Nome (Clicável) e Quantidade de Estoque */}
+                {/* Lado Esquerdo: Nome e Quantidade de Estoque */}
                 <View style={{ flex: 1 }}>
-                  {/* Novo: Ao clicar no texto do nome, joga os dados para o formulário do topo entrar em modo de edição */}
-                  <TouchableOpacity onPress={() => {
-                    setIdEmEdicao(item.id);
-                    setNome(item.nome);
-                    setQuantidade(String(item.quantidade));
-                  }}>
-                    <Text style={[styles.itemText, { color: '#007bff', textDecorationLine: 'underline' }]}>
-                      {item.nome} 📝
-                    </Text>
-                  </TouchableOpacity>
+                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    {/* Nome do item */}
+                    <Text style={[styles.itemText, { marginRight: 10, fontWeight: '500' }]}>{item.nome}</Text>
+                    
+                    {/* Botão com Ícone Vetorial de Lápis (FontAwesome) */}
+                    <TouchableOpacity 
+                      style={{ padding: 4 }}
+                      onPress={() => {
+                        setIdEmEdicao(item.id);
+                        setNome(item.nome);
+                        setQuantidade(String(item.quantidade));
+                      }}
+                    >
+                      <FontAwesome name="pencil" size={16} color="#666" />
+                    </TouchableOpacity>
+                  </View>
                   
                   <Text style={[
                     styles.itemText, 
@@ -249,9 +255,12 @@ export default function App() {
                     <Text style={{ fontWeight: 'bold', fontSize: 16 }}>+</Text>
                   </TouchableOpacity>
                   
-                  {/* Botão de exclusão */}
-                  <TouchableOpacity onPress={() => handleExcluir(item.id)}>
-                    <Text style={{ color: 'red', fontWeight: 'bold', fontSize: 16 }}>X</Text>
+                  {/* Botão com Ícone Vetorial de Lixeira/Excluir (FontAwesome) */}
+                  <TouchableOpacity 
+                    style={{ padding: 4 }}
+                    onPress={() => handleExcluir(item.id)}
+                  >
+                    <FontAwesome name="trash" size={18} color="red" />
                   </TouchableOpacity>
                 </View>
               </View>
