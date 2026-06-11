@@ -31,10 +31,15 @@ export default function App() {
     getMateriais();
   }, []);
 
-  // POST - Cadastrar material
+ // POST - Cadastrar material
   const handleCadastro = async () => {
     if (!nome || !quantidade) {
       alert("Preencha todos os campos!");
+      return;
+    }
+
+    if (isNaN(Number(quantidade))) {
+      alert("A quantidade deve ser apenas números!");
       return;
     }
 
@@ -133,7 +138,7 @@ export default function App() {
           placeholder="Quantidade"
           keyboardType="numeric"
           value={quantidade}
-          onChangeText={setQuantidade}
+          onChangeText={(texto) => setQuantidade(texto.replace(/[^0-9]/g, ''))}
         />
 
         <TouchableOpacity 
