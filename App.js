@@ -60,35 +60,6 @@ export default function App() {
     }
   };
 
-  // POST - Cadastrar material
-  const handleCadastro = async () => {
-    if (!nome || !quantidade) {
-      alert("Preencha todos os campos!");
-      return;
-    }
-
-    try {
-      const response = await fetch(API_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          nome: nome,
-          quantidade: Number(quantidade) // Força virar número pra API
-        })
-      });
-
-      if (response.ok) {
-        setNome('');
-        setQuantidade('');
-        getMateriais(); // Atualiza a lista após postar
-      }
-    } catch (err) {
-      console.log("Erro no POST:", err);
-    }
-  };
-
   // DELETE - Excluir material
   const handleExcluir = async (id) => {
     try {
