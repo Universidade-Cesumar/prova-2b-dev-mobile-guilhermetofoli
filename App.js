@@ -74,6 +74,35 @@ export default function App() {
     }
   };
 
+  // PUT - Alterar a quantidade (Adicionar ou Subtrair)
+  const alterarQuantidade = async (item, mudanca) => {
+    const novaQuantidade = item.quantidade + mudanca;
+
+    // Evita que o estoque fique negativo nas saídas
+    if (novaQuantidade < 0) {
+      alert("Estoque já está zerado!");
+      return;
+    }
+
+    try {
+      const response = await fetch(`${API_URL}/${item.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          quantidade: novaQuantidade
+        })
+      });
+
+      if (response.ok) {
+        getMateriais(); // Atualiza a lista na tela
+      }
+    } catch (err) {
+      console.log("Erro no PUT:", err);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Almoxarifado - Enfermagem</Text>
@@ -122,14 +151,31 @@ export default function App() {
           renderItem={({ item }) => (
             <View style={styles.itemRow}>
               <Text style={styles.itemText}>{item.nome}</Text>
+              
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                {/* Botão de Diminuir (-) */}
+                <TouchableOpacity 
+                  style={{ paddingHorizontal: 10, paddingVertical: 5, backgroundColor: '#eee', borderRadius: 3, marginRight: 8 }}
+                  onPress={() => alterarQuantidade(item, -1)}
+                >
+                  <Text style={{ fontWeight: 'bold' }}>-</Text>
+                </TouchableOpacity>
+
                 <Text style={[
                   styles.itemText, 
-                  { marginRight: 15 },
+                  { marginRight: 8 },
                   item.quantidade === 0 && { color: 'red', fontWeight: 'bold' }
                 ]}>
                   Qtd: {item.quantidade}
                 </Text>
+
+                {/* Botão de Aumentar (+) */}
+                <TouchableOpacity 
+                  style={{ paddingHorizontal: 10, paddingVertical: 5, backgroundColor: '#eee', borderRadius: 3, marginRight: 20 }}
+                  onPress={() => alterarQuantidade(item, 1)}
+                >
+                  <Text style={{ fontWeight: 'bold' }}>+</Text>
+                </TouchableOpacity>
                 
                 {/* Botão de exclusão */}
                 <TouchableOpacity onPress={() => handleExcluir(item.id)}>
