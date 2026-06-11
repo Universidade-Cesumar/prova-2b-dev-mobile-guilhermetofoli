@@ -10,6 +10,7 @@ export default function App() {
   const [nome, setNome] = useState('');
   const [quantidade, setQuantidade] = useState('');
   const [loading, setLoading] = useState(false);
+  const [valoresAjuste, setValoresAjuste] = useState({});
 
   // --- Funções de Requisição e Efeitos ---
 
@@ -79,17 +80,25 @@ export default function App() {
     }
   };
 
- // PUT - Alterar a quantidade (Adicionar ou Subtrair)
-  const alterarQuantidade = async (item, mudanca) => {
-    const novaQuantidade = item.quantidade + mudanca;
-
-    // Evita que o estoque fique abaixo de zero nas saídas
-    if (novaQuantidade < 0) {
-      alert("Estoque já está zerado!");
+ // PUT - Alterar a quantidade com valor dinâmico
+  const alterarQuantidade = async (item, mudanca, valorInput) => {
+    // Se o campo estiver vazio, assume 1 por padrão. Senão, pega o número digitado.
+    const multiplicador = valorInput ? Number(valorInput) : 1;
+    
+    if (isNaN(multiplicador) || multiplicador <= 0) {
+      alert("Digite um valor válido para movimentar!");
       return;
     }
 
-    // NOVO: Avisa a Camila em tempo real que o insumo acabou
+    // Calcula a nova quantidade multiplicando o sinal (+1 ou -1) pelo valor digitado
+    const novaQuantidade = item.quantidade + (mudanca * multiplicador);
+
+    // Evita que o estoque fique abaixo de zero nas saídas
+    if (novaQuantidade < 0) {
+      alert("A quantidade de saída é maior do que o estoque disponível!");
+      return;
+    }
+
     if (novaQuantidade === 0) {
       alert(`Atenção: O estoque do material "${item.nome}" acabou de zerar!`);
     }
@@ -106,7 +115,7 @@ export default function App() {
       });
 
       if (response.ok) {
-        getMateriais(); // Atualiza a lista na tela
+        getMateriais();
       }
     } catch (err) {
       console.log("Erro no PUT:", err);
@@ -158,42 +167,68 @@ export default function App() {
           testID="lista-materiais"
           data={materiais}
           keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <View style={styles.itemRow}>
-              <Text style={styles.itemText}>{item.nome}</Text>
-              
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                {/* Botão de Diminuir (-) */}
-                <TouchableOpacity 
-                  style={{ paddingHorizontal: 10, paddingVertical: 5, backgroundColor: '#eee', borderRadius: 3, marginRight: 8 }}
-                  onPress={() => alterarQuantidade(item, -1)}
-                >
-                  <Text style={{ fontWeight: 'bold' }}>-</Text>
-                </TouchableOpacity>
+          renderItem={({ item }) => {
+            const valorDigitado = valoresAjuste[item.id] || '1'; // Padrão é 1 se tiver vazio
 
-                <Text style={[
-                  styles.itemText, 
-                  { marginRight: 8 },
-                  item.quantidade === 0 && { color: 'red', fontWeight: 'bold' }
-                ]}>
-                  Qtd: {item.quantidade}
-                </Text>
-
-                {/* Botão de Aumentar (+) */}
-                <TouchableOpacity 
-                  style={{ paddingHorizontal: 10, paddingVertical: 5, backgroundColor: '#eee', borderRadius: 3, marginRight: 20 }}
-                  onPress={() => alterarQuantidade(item, 1)}
-                >
-                  <Text style={{ fontWeight: 'bold' }}>+</Text>
-                </TouchableOpacity>
+            return (
+              <View style={styles.itemRow}>
+                <View style={{ flex: 1 }}>
+                  <Text style={styles.itemText}>{item.nome}</Text>
+                  <Text style={[
+                    styles.itemText, 
+                    { fontSize: 14, marginTop: 4 },
+                    item.quantidade === 0 && { color: 'red', fontWeight: 'bold' }
+                  ]}>
+                    Estoque: {item.quantidade}
+                  </Text>
+                </View>
                 
-                {/* Botão de exclusão */}
-                <TouchableOpacity onPress={() => handleExcluir(item.id)}>
-                  <Text style={{ color: 'red', fontWeight: 'bold', fontSize: 16 }}>X</Text>
-                </TouchableOpacity>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  {/* Botão de Diminuir (-) */}
+                  <TouchableOpacity 
+                    style={{ paddingHorizontal: 12, paddingVertical: 8, backgroundColor: '#eee', borderRadius: 3 }}
+                    onPress={() => alterarQuantidade(item, -1, valorDigitado)}
+                  >
+                    <Text style={{ fontWeight: 'bold', fontSize: 16 }}>-</Text>
+                  </TouchableOpacity>
+
+                  {/* Input do valor do ajuste em tempo real */}
+                  <TextInput
+                    style={{ 
+                      borderWidth: 1, 
+                      borderColor: '#ccc', 
+                      textAlign: 'center', 
+                      padding: 4, 
+                      width: 45, 
+                      marginHorizontal: 6, 
+                      borderRadius: 3,
+                      fontSize: 14
+                    }}
+                    keyboardType="numeric"
+                    value={String(valoresAjuste[item.id] ?? '')}
+                    placeholder="1"
+                    onChangeText={(texto) => {
+                      const filtrado = texto.replace(/[^0-9]/g, '');
+                      setValoresAjuste({ ...valoresAjuste, [item.id]: filtrado });
+                    }}
+                  />
+
+                  {/* Botão de Aumentar (+) */}
+                  <TouchableOpacity 
+                    style={{ paddingHorizontal: 12, paddingVertical: 8, backgroundColor: '#eee', borderRadius: 3, marginRight: 15 }}
+                    onPress={() => alterarQuantidade(item, 1, valorDigitado)}
+                  >
+                    <Text style={{ fontWeight: 'bold', fontSize: 16 }}>+</Text>
+                  </TouchableOpacity>
+                  
+                  {/* Botão de exclusão */}
+                  <TouchableOpacity onPress={() => handleExcluir(item.id)}>
+                    <Text style={{ color: 'red', fontWeight: 'bold', fontSize: 16 }}>X</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
-            </View>
-          )}
+            );
+          }}
         />
       )}
     </View>
