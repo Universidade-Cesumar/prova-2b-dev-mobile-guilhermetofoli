@@ -108,7 +108,12 @@ export default function App() {
           renderItem={({ item }) => (
             <View style={styles.itemRow}>
               <Text style={styles.itemText}>{item.nome}</Text>
-              <Text style={styles.itemText}>Qtd: {item.quantidade}</Text>
+              <Text style={[
+                styles.itemText, 
+                item.quantidade === 0 && { color: 'red', fontWeight: 'bold' }
+              ]}>
+                Qtd: {item.quantidade}
+              </Text>
             </View>
           )}
         />
