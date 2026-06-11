@@ -60,6 +60,49 @@ export default function App() {
     }
   };
 
+  // POST - Cadastrar material
+  const handleCadastro = async () => {
+    if (!nome || !quantidade) {
+      alert("Preencha todos os campos!");
+      return;
+    }
+
+    try {
+      const response = await fetch(API_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          nome: nome,
+          quantidade: Number(quantidade) // Força virar número pra API
+        })
+      });
+
+      if (response.ok) {
+        setNome('');
+        setQuantidade('');
+        getMateriais(); // Atualiza a lista após postar
+      }
+    } catch (err) {
+      console.log("Erro no POST:", err);
+    }
+  };
+
+  // DELETE - Excluir material
+  const handleExcluir = async (id) => {
+    try {
+      const response = await fetch(`${API_URL}/${id}`, {
+        method: 'DELETE'
+      });
+      if (response.ok) {
+        getMateriais(); // Atualiza a lista automática após deletar
+      }
+    } catch (err) {
+      console.log("Erro no DELETE:", err);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Almoxarifado - Enfermagem</Text>
@@ -108,12 +151,20 @@ export default function App() {
           renderItem={({ item }) => (
             <View style={styles.itemRow}>
               <Text style={styles.itemText}>{item.nome}</Text>
-              <Text style={[
-                styles.itemText, 
-                item.quantidade === 0 && { color: 'red', fontWeight: 'bold' }
-              ]}>
-                Qtd: {item.quantidade}
-              </Text>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Text style={[
+                  styles.itemText, 
+                  { marginRight: 15 },
+                  item.quantidade === 0 && { color: 'red', fontWeight: 'bold' }
+                ]}>
+                  Qtd: {item.quantidade}
+                </Text>
+                
+                {/* Botão de exclusão */}
+                <TouchableOpacity onPress={() => handleExcluir(item.id)}>
+                  <Text style={{ fontSize: 16 }}>❌</Text>
+                </TouchableOpacity>
+              </View>
             </View>
           )}
         />
