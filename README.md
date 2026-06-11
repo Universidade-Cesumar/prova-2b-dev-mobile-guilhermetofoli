@@ -1,1 +1,5 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/jOw_Hzd7)
+# SysAlmoxarifado - Controle de Estoque (Enfermagem)
+
+Este projeto foi desenvolvido para a disciplina de Desenvolvimento Mobile com o objetivo de modernizar e digitalizar o controle de insumos médicos do almoxarifado de enfermagem. 
+
+O sistema substitui os antigos rascunhos de papel e planilhas manuais por um aplicativo mobile integrado a uma API em tempo real.
