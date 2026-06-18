@@ -5,6 +5,18 @@ import { FontAwesome } from '@expo/vector-icons';
 // URL da MockAPI
 const API_URL = 'https://6a2b348eb687a7d5cbc4f232.mockapi.io/api/v1/materiais';
 
+// --- Função Pura Obrigatória para o Autograding (Sprint 2) ---
+export function validarRetirada(estoqueAtual, quantidadeRetirada) {
+  const estoque = Number(estoqueAtual);
+  const retirada = Number(quantidadeRetirada);
+
+  // Se não for um número válido, for negativo ou maior que o estoque atual, invalida (false)
+  if (isNaN(retirada) || retirada <= 0 || retirada > estoque) {
+    return false;
+  }
+  return true;
+}
+
 export default function App() {
   // --- Estados da Aplicação ---
   const [materiais, setMateriais] = useState([]);
@@ -96,24 +108,18 @@ export default function App() {
     }
   };
 
- // PUT - Alterar a quantidade com valor dinâmico
-  const alterarQuantidade = async (item, mudanca, valorInput) => {
-    // Se o campo estiver vazio, assume 1 por padrão. Senão, pega o número digitado.
-    const multiplicador = valorInput ? Number(valorInput) : 1;
-    
-    if (isNaN(multiplicador) || multiplicador <= 0) {
-      alert("Digite um valor válido para movimentar!");
+ // PUT - Registrar baixa/retirada de estoque (Sprint 2)
+  const alterarQuantidade = async (item, valorInput) => {
+    // Se o campo estiver vazio, assume 1 por padrão
+    const quantidadeRetirar = valorInput ? Number(valorInput) : 1;
+
+    // Utiliza a função pura obrigatória para validar a regra de negócio
+    if (!validarRetirada(item.quantidade, quantidadeRetirar)) {
+      alert("Operação inválida! Verifique o saldo disponível ou a quantidade informada.");
       return;
     }
 
-    // Calcula a nova quantidade multiplicando o sinal (+1 ou -1) pelo valor digitado
-    const novaQuantidade = item.quantidade + (mudanca * multiplicador);
-
-    // Evita que o estoque fique abaixo de zero nas saídas
-    if (novaQuantidade < 0) {
-      alert("A quantidade de saída é maior do que o estoque disponível!");
-      return;
-    }
+    const novaQuantidade = item.quantidade - quantidadeRetirar;
 
     if (novaQuantidade === 0) {
       alert(`Atenção: O estoque do material "${item.nome}" acabou de zerar!`);
@@ -132,6 +138,8 @@ export default function App() {
 
       if (response.ok) {
         getMateriais();
+        // Limpa o input do item específico
+        setValoresAjuste({ ...valoresAjuste, [item.id]: '' });
       }
     } catch (err) {
       console.log("Erro no PUT:", err);
@@ -175,26 +183,25 @@ export default function App() {
         </TouchableOpacity>
       </View>
 
-      {/* Lista de estoque */}
+{/* Lista de estoque */}
       {loading ? (
         <ActivityIndicator size="small" color="#000" />
       ) : (
-      <FlatList
+        <FlatList
           testID="lista-materiais"
           data={materiais}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => {
-            const valorDigitado = valoresAjuste[item.id] || '1'; // Padrão é 1 se tiver vazio
+            // Define a variável no escopo correto do renderItem
+            const valorDigitado = valoresAjuste[item.id] || ''; 
 
             return (
               <View style={styles.itemRow}>
                 {/* Lado Esquerdo: Nome e Quantidade de Estoque */}
                 <View style={{ flex: 1 }}>
                   <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    {/* Nome do item */}
                     <Text style={[styles.itemText, { marginRight: 10, fontWeight: '500' }]}>{item.nome}</Text>
                     
-                    {/* Botão com Ícone Vetorial de Lápis (FontAwesome) */}
                     <TouchableOpacity 
                       style={{ padding: 4 }}
                       onPress={() => {
@@ -216,47 +223,43 @@ export default function App() {
                   </Text>
                 </View>
                 
-                {/* Lado Direito: Controles de movimentação (+ / -) e Exclusão */}
+                {/* Lado Direito: Controles de movimentação e Exclusão (Sprint 2) */}
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  {/* Botão de Diminuir (-) */}
-                  <TouchableOpacity 
-                    style={{ paddingHorizontal: 12, paddingVertical: 8, backgroundColor: '#eee', borderRadius: 3 }}
-                    onPress={() => alterarQuantidade(item, -1, valorDigitado)}
-                  >
-                    <Text style={{ fontWeight: 'bold', fontSize: 16 }}>-</Text>
-                  </TouchableOpacity>
-
-                  {/* Input do valor do ajuste em tempo real */}
+                  
+                  {/* CONTRATO TÉCNICO: Input com testID="input-retirada" */}
                   <TextInput
+                    testID="input-retirada"
                     style={{ 
                       borderWidth: 1, 
                       borderColor: '#ccc', 
                       textAlign: 'center', 
                       padding: 4, 
-                      width: 45, 
+                      width: 55, 
                       marginHorizontal: 6, 
                       borderRadius: 3,
                       fontSize: 14
                     }}
                     keyboardType="numeric"
                     value={String(valoresAjuste[item.id] ?? '')}
-                    placeholder="1"
+                    placeholder="Qtd"
                     onChangeText={(texto) => {
                       const filtrado = texto.replace(/[^0-9]/g, '');
                       setValoresAjuste({ ...valoresAjuste, [item.id]: filtrado });
                     }}
                   />
 
-                  {/* Botão de Aumentar (+) */}
+                  {/* CONTRATO TÉCNICO: Botão Baixar com testID="btn-baixar" e parâmetro correto */}
                   <TouchableOpacity 
-                    style={{ paddingHorizontal: 12, paddingVertical: 8, backgroundColor: '#eee', borderRadius: 3, marginRight: 15 }}
-                    onPress={() => alterarQuantidade(item, 1, valorDigitado)}
+                    testID="btn-baixar"
+                    style={{ paddingHorizontal: 12, paddingVertical: 8, backgroundColor: '#007bff', borderRadius: 3, marginRight: 15 }}
+                    onPress={() => alterarQuantidade(item, valorDigitado)}
                   >
-                    <Text style={{ fontWeight: 'bold', fontSize: 16 }}>+</Text>
+                    <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 14 }}>Baixar</Text>
                   </TouchableOpacity>
                   
-                  {/* Botão com Ícone Vetorial de Lixeira/Excluir (FontAwesome) */}
+                  {/* CONTRATO TÉCNICO: Botão Deletar com testID="btn-excluir" */}
                   <TouchableOpacity 
+                    testID="btn-excluir"
                     style={{ padding: 4 }}
                     onPress={() => handleExcluir(item.id)}
                   >
