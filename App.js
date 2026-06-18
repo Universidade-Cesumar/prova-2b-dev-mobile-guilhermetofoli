@@ -169,7 +169,7 @@ export default function App() {
           style={styles.button}
           onPress={handleCadastro}
         >
-          <Text style={styles.buttonText}>Cadastrar</Text>
+          <Text style={styles.buttonText}>{idEmEdicao ? "Atualizar" : "Cadastrar"}</Text>
         </TouchableOpacity>
       </View>
 
