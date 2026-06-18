@@ -171,7 +171,7 @@ export default function App() {
         >
           <Text style={styles.buttonText}>Cadastrar</Text>
         </TouchableOpacity>
-      </View>git 
+      </View>
 
 {/* Lista de estoque */}
       {/* Lista de estoque */}
@@ -267,25 +267,26 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-  container: {
+ container: {
     flex: 1,
-    backgroundColor: '#fff',
-    paddingTop: 50,
-    paddingHorizontal: 20,
+    backgroundColor: '#f4f6f9',
+    paddingTop: 60,
+    paddingHorizontal: 16,
   },
   title: {
-    fontSize: 22,
-    fontWeight: 'bold',
+    fontSize: 24,
+    fontWeight: '700',
     textAlign: 'center',
-    marginBottom: 10,
-    color: '#333',
+    marginBottom: 6,
+    color: '#1a202c',
   },
   description: {
-    fontSize: 14,
-    color: '#666',
+    fontSize: 13,
+    color: '#718096',
     textAlign: 'center',
-    lineHeight: 20,
-    marginBottom: 30,
+    lineHeight: 18,
+    marginBottom: 20,
+    paddingHorizontal: 10,
   },
   form: {
     marginBottom: 20,
