@@ -178,7 +178,7 @@ export default function App() {
         <ActivityIndicator size="small" color="#000" />
       ) : (
         <FlatList
-          testID="lista-materiais"
+          testID="lista-materials"
           data={materiais}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => {
