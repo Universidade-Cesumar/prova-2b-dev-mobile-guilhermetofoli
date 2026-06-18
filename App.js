@@ -293,7 +293,6 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 16,
     marginBottom: 20,
-    // Cria uma sombra leve para o card se destacar do fundo cinza
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.05,
@@ -312,14 +311,22 @@ const styles = StyleSheet.create({
     color: '#2d3748',
   },
   button: {
-    backgroundColor: '#333',
+    backgroundColor: '#007bff',
+    flexDirection: 'row',
     padding: 12,
-    borderRadius: 5,
+    borderRadius: 8,
     alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2,
   },
   buttonText: {
     color: '#fff',
-    fontWeight: 'bold',
+    fontWeight: '600',
+    fontSize: 15,
   },
   itemRow: {
     flexDirection: 'row',
