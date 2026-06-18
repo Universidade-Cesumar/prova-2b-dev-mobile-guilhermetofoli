@@ -5,17 +5,7 @@ import { FontAwesome } from '@expo/vector-icons';
 // URL da MockAPI
 const API_URL = 'https://6a2b348eb687a7d5cbc4f232.mockapi.io/api/v1/materiais';
 
-// --- Função Pura Obrigatória para o Autograding (Sprint 2) ---
-export function validarRetirada(estoqueAtual, quantidadeRetirada) {
-  const estoque = Number(estoqueAtual);
-  const retirada = Number(quantidadeRetirada);
-
-  // Se não for um número válido, for negativo ou maior que o estoque atual, invalida (false)
-  if (isNaN(retirada) || retirada <= 0 || retirada > estoque) {
-    return false;
-  }
-  return true;
-}
+import { validarRetirada } from '../src/utils/validacoes';
 
 export default function App() {
   // --- Estados da Aplicação ---
