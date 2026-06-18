@@ -241,7 +241,7 @@ export default function App() {
                     }}
                     keyboardType="numeric"
                     value={String(valoresAjuste[item.id] ?? '')}
-                    placeholder="Qtd"
+                    placeholder="Qtd."
                     onChangeText={(texto) => {
                       const filtrado = texto.replace(/[^0-9]/g, '');
                       setValoresAjuste({ ...valoresAjuste, [item.id]: filtrado });
