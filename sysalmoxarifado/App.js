@@ -108,10 +108,10 @@ export default function App() {
     }
   };
 
- // PUT - Registrar baixa/retirada de estoque (Sprint 2)
+// PUT - Registrar baixa/retirada de estoque (Sprint 2)
   const alterarQuantidade = async (item, valorInput) => {
-    // Se o campo estiver vazio, assume 1 por padrão
-    const quantidadeRetirar = valorInput ? Number(valorInput) : 1;
+    // Garante que se o input for vazio, nulo ou apenas espaços, assume 1 por padrão
+    const quantidadeRetirar = (valorInput && valorInput.trim() !== '') ? Number(valorInput) : 1;
 
     // Utiliza a função pura obrigatória para validar a regra de negócio
     if (!validarRetirada(item.quantidade, quantidadeRetirar)) {
@@ -145,7 +145,7 @@ export default function App() {
       console.log("Erro no PUT:", err);
     }
   };
-
+  
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Almoxarifado - Enfermagem</Text>
