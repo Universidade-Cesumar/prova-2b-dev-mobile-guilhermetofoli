@@ -171,96 +171,97 @@ export default function App() {
         >
           <Text style={styles.buttonText}>Cadastrar</Text>
         </TouchableOpacity>
-      </View>
+      </View>git 
 
 {/* Lista de estoque */}
-      {loading ? (
-        <ActivityIndicator size="small" color="#000" />
-      ) : (
-        <FlatList
-          testID="lista-materials"
-          data={materiais}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => {
-            // Define a variável no escopo correto do renderItem
-            const valorDigitado = valoresAjuste[item.id] || ''; 
+      {/* Lista de estoque */}
+      {loading && (
+        <ActivityIndicator size="small" color="#000" style={{ marginBottom: 10 }} />
+      )}
 
-            return (
-              <View style={styles.itemRow}>
-                {/* Lado Esquerdo: Nome e Quantidade de Estoque */}
-                <View style={{ flex: 1 }}>
-                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Text style={[styles.itemText, { marginRight: 10, fontWeight: '500' }]}>{item.nome}</Text>
-                    
-                    <TouchableOpacity 
-                      style={{ padding: 4 }}
-                      onPress={() => {
-                        setIdEmEdicao(item.id);
-                        setNome(item.nome);
-                        setQuantidade(String(item.quantidade));
-                      }}
-                    >
-                      <FontAwesome name="pencil" size={16} color="#666" />
-                    </TouchableOpacity>
-                  </View>
+      <FlatList
+        testID="lista-materials"
+        data={materiais}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => {
+          // Define a variável no escopo correto do renderItem
+          const valorDigitado = valoresAjuste[item.id] || ''; 
+
+          return (
+            <View style={styles.itemRow}>
+              {/* Lado Esquerdo: Nome e Quantidade de Estoque */}
+              <View style={{ flex: 1 }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <Text style={[styles.itemText, { marginRight: 10, fontWeight: '500' }]}>{item.nome}</Text>
                   
-                  <Text style={[
-                    styles.itemText, 
-                    { fontSize: 14, marginTop: 4 },
-                    item.quantidade === 0 && { color: 'red', fontWeight: 'bold' }
-                  ]}>
-                    Estoque: {item.quantidade}
-                  </Text>
+                  <TouchableOpacity 
+                    style={{ padding: 4 }}
+                    onPress={() => {
+                      setIdEmEdicao(item.id);
+                      setNome(item.nome);
+                      setQuantidade(String(item.quantidade));
+                    }}
+                  >
+                    <FontAwesome name="pencil" size={16} color="#666" />
+                  </TouchableOpacity>
                 </View>
                 
-                {/* Lado Direito: Controles de movimentação e Exclusão (Sprint 2) */}
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  
-                  {/* CONTRATO TÉCNICO: Input com testID="input-retirada" */}
-                  <TextInput
-                    testID="input-retirada"
-                    style={{ 
-                      borderWidth: 1, 
-                      borderColor: '#ccc', 
-                      textAlign: 'center', 
-                      padding: 4, 
-                      width: 55, 
-                      marginHorizontal: 6, 
-                      borderRadius: 3,
-                      fontSize: 14
-                    }}
-                    keyboardType="numeric"
-                    value={String(valoresAjuste[item.id] ?? '')}
-                    placeholder="Qtd."
-                    onChangeText={(texto) => {
-                      const filtrado = texto.replace(/[^0-9]/g, '');
-                      setValoresAjuste({ ...valoresAjuste, [item.id]: filtrado });
-                    }}
-                  />
-
-                  {/* CONTRATO TÉCNICO: Botão Baixar com testID="btn-baixar" e parâmetro correto */}
-                  <TouchableOpacity 
-                    testID="btn-baixar"
-                    style={{ paddingHorizontal: 12, paddingVertical: 8, backgroundColor: '#007bff', borderRadius: 3, marginRight: 15 }}
-                    onPress={() => alterarQuantidade(item, valorDigitado)}
-                  >
-                    <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 14 }}>Baixar</Text>
-                  </TouchableOpacity>
-                  
-                  {/* CONTRATO TÉCNICO: Botão Deletar com testID="btn-excluir" */}
-                  <TouchableOpacity 
-                    testID="btn-excluir"
-                    style={{ padding: 4 }}
-                    onPress={() => handleExcluir(item.id)}
-                  >
-                    <FontAwesome name="trash" size={18} color="red" />
-                  </TouchableOpacity>
-                </View>
+                <Text style={[
+                  styles.itemText, 
+                  { fontSize: 14, marginTop: 4 },
+                  item.quantidade === 0 && { color: 'red', fontWeight: 'bold' }
+                ]}>
+                  Estoque: {item.quantidade}
+                </Text>
               </View>
-            );
-          }}
-        />
-      )}
+              
+              {/* Lado Direito: Controles de movimentação e Exclusão (Sprint 2) */}
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                
+                {/* CONTRATO TÉCNICO: Input com testID="input-retirada" */}
+                <TextInput
+                  testID="input-retirada"
+                  style={{ 
+                    borderWidth: 1, 
+                    borderColor: '#ccc', 
+                    textAlign: 'center', 
+                    padding: 4, 
+                    width: 55, 
+                    marginHorizontal: 6, 
+                    borderRadius: 3,
+                    fontSize: 14
+                  }}
+                  keyboardType="numeric"
+                  value={String(valoresAjuste[item.id] ?? '')}
+                  placeholder="Qtd."
+                  onChangeText={(texto) => {
+                    const filtrado = texto.replace(/[^0-9]/g, '');
+                    setValoresAjuste({ ...valoresAjuste, [item.id]: filtrado });
+                  }}
+                />
+
+                {/* CONTRATO TÉCNICO: Botão Baixar com testID="btn-baixar" e parâmetro correto */}
+                <TouchableOpacity 
+                  testID="btn-baixar"
+                  style={{ paddingHorizontal: 12, paddingVertical: 8, backgroundColor: '#007bff', borderRadius: 3, marginRight: 15 }}
+                  onPress={() => alterarQuantidade(item, valorDigitado)}
+                >
+                  <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 14 }}>Baixar</Text>
+                </TouchableOpacity>
+                
+                {/* CONTRATO TÉCNICO: Botão Deletar com testID="btn-excluir" */}
+                <TouchableOpacity 
+                  testID="btn-excluir"
+                  style={{ padding: 4 }}
+                  onPress={() => handleExcluir(item.id)}
+                >
+                  <FontAwesome name="trash" size={18} color="red" />
+                </TouchableOpacity>
+              </View>
+            </View>
+          );
+        }}
+      />
     </View>
   );
 }
