@@ -329,11 +329,20 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   itemRow: {
+    backgroundColor: '#fff',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: '#eee',
+    alignItems: 'center',
+    padding: 14,
+    borderRadius: 10,
+    marginBottom: 10, // Espaçamento entre os cards
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.03,
+    shadowRadius: 4,
+    elevation: 1,
+    borderLeftWidth: 4,
+    borderLeftColor: '#007bff', 
   },
   itemText: {
     fontSize: 16,
