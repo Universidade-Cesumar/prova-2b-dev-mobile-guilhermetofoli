@@ -221,16 +221,7 @@ export default function App() {
                 {/* CONTRATO TÉCNICO: Input com testID="input-retirada" */}
                 <TextInput
                   testID="input-retirada"
-                  style={{
-                    borderWidth: 1,
-                    borderColor: '#ccc',
-                    textAlign: 'center',
-                    padding: 4,
-                    width: 55,
-                    marginHorizontal: 6,
-                    borderRadius: 3,
-                    fontSize: 14
-                  }}
+                  style={styles.inputQuantity}
                   keyboardType="numeric"
                   value={String(valoresAjuste[item.id] ?? '')}
                   placeholder="Qtd."
@@ -243,10 +234,10 @@ export default function App() {
                 {/* CONTRATO TÉCNICO: Botão Baixar com testID="btn-baixar" e parâmetro correto */}
                 <TouchableOpacity
                   testID="btn-baixar"
-                  style={{ paddingHorizontal: 12, paddingVertical: 8, backgroundColor: '#007bff', borderRadius: 3, marginRight: 15 }}
+                  style={styles.btnBaixar}
                   onPress={() => alterarQuantidade(item, valorDigitado)}
                 >
-                  <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 14 }}>Baixar</Text>
+                  <Text style={{ color: '#2b6cb0', fontWeight: 'bold', fontSize: 13 }}>Baixar</Text>
                 </TouchableOpacity>
 
                 {/* CONTRATO TÉCNICO: Botão Deletar com testID="btn-excluir" */}
@@ -353,5 +344,29 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#718096',
     marginTop: 4,
+  },
+  inputQuantity: {
+    backgroundColor: '#f7fafc',
+    borderWidth: 1,
+    borderColor: '#cbd5e0',
+    textAlign: 'center',
+    paddingVertical: 6,
+    paddingHorizontal: 4,
+    width: 48,
+    borderRadius: 6,
+    fontSize: 14,
+    color: '#2d3748',
+  },
+  btnBaixar: {
+    backgroundColor: '#ebf8ff', // Fundo azul bem clarinho e elegante
+    borderWidth: 1,
+    borderColor: '#bee3f8',
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 6,
+    marginLeft: 6,
+    marginRight: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
