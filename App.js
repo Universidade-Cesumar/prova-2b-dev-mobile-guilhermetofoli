@@ -36,7 +36,7 @@ export default function App() {
     getMateriais();
   }, []);
 
- // POST / PUT - Cadastrar ou Editar material
+  // POST / PUT - Cadastrar ou Editar material
   const handleCadastro = async () => {
     if (!nome || !quantidade) {
       alert("Preencha todos os campos!");
@@ -83,7 +83,7 @@ export default function App() {
       console.log("Erro no salvar:", err);
     }
   };
-  
+
   // DELETE - Excluir material
   const handleExcluir = async (id) => {
     try {
@@ -98,7 +98,7 @@ export default function App() {
     }
   };
 
-// PUT - Registrar baixa/retirada de estoque (Sprint 2)
+  // PUT - Registrar baixa/retirada de estoque (Sprint 2)
   const alterarQuantidade = async (item, valorInput) => {
     // Garante que se o input for vazio, nulo ou apenas espaços, assume 1 por padrão
     const quantidadeRetirar = (valorInput && valorInput.trim() !== '') ? Number(valorInput) : 1;
@@ -135,19 +135,19 @@ export default function App() {
       console.log("Erro no PUT:", err);
     }
   };
-  
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Almoxarifado - Enfermagem</Text>
-      
+
       <Text style={styles.description}>
-        Este template servirá para desenvolver o projeto responsável por modernizar o controle de insumos médicos do almoxarifado. 
+        Este template servirá para desenvolver o projeto responsável por modernizar o controle de insumos médicos do almoxarifado.
         Através desta interface conectada à API, é possível realizar o inventário em tempo real, cadastrar novos materiais e registrar baixas de estoque de forma ágil e segura.
       </Text>
 
       {/* Inputs de cadastro */}
       <View style={styles.form}>
-        <TextInput 
+        <TextInput
           testID="input-nome"
           style={styles.input}
           placeholder="Nome do Material"
@@ -155,7 +155,7 @@ export default function App() {
           onChangeText={setNome}
         />
 
-        <TextInput 
+        <TextInput
           testID="input-quantidade"
           style={styles.input}
           placeholder="Quantidade"
@@ -164,8 +164,8 @@ export default function App() {
           onChangeText={(texto) => setQuantidade(texto.replace(/[^0-9]/g, ''))}
         />
 
-        <TouchableOpacity 
-          testID="btn-cadastrar" 
+        <TouchableOpacity
+          testID="btn-cadastrar"
           style={styles.button}
           onPress={handleCadastro}
         >
@@ -173,7 +173,7 @@ export default function App() {
         </TouchableOpacity>
       </View>
 
-{/* Lista de estoque */}
+      {/* Lista de estoque */}
       {/* Lista de estoque */}
       {loading && (
         <ActivityIndicator size="small" color="#000" style={{ marginBottom: 10 }} />
@@ -185,7 +185,7 @@ export default function App() {
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => {
           // Define a variável no escopo correto do renderItem
-          const valorDigitado = valoresAjuste[item.id] || ''; 
+          const valorDigitado = valoresAjuste[item.id] || '';
 
           return (
             <View style={styles.itemRow}>
@@ -193,8 +193,8 @@ export default function App() {
               <View style={{ flex: 1 }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   <Text style={[styles.itemText, { marginRight: 10, fontWeight: '500' }]}>{item.nome}</Text>
-                  
-                  <TouchableOpacity 
+
+                  <TouchableOpacity
                     style={{ padding: 4 }}
                     onPress={() => {
                       setIdEmEdicao(item.id);
@@ -205,29 +205,29 @@ export default function App() {
                     <FontAwesome name="pencil" size={16} color="#666" />
                   </TouchableOpacity>
                 </View>
-                
+
                 <Text style={[
-                  styles.itemText, 
+                  styles.itemText,
                   { fontSize: 14, marginTop: 4 },
                   item.quantidade === 0 && { color: 'red', fontWeight: 'bold' }
                 ]}>
                   Estoque: {item.quantidade}
                 </Text>
               </View>
-              
+
               {/* Lado Direito: Controles de movimentação e Exclusão (Sprint 2) */}
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                
+
                 {/* CONTRATO TÉCNICO: Input com testID="input-retirada" */}
                 <TextInput
                   testID="input-retirada"
-                  style={{ 
-                    borderWidth: 1, 
-                    borderColor: '#ccc', 
-                    textAlign: 'center', 
-                    padding: 4, 
-                    width: 55, 
-                    marginHorizontal: 6, 
+                  style={{
+                    borderWidth: 1,
+                    borderColor: '#ccc',
+                    textAlign: 'center',
+                    padding: 4,
+                    width: 55,
+                    marginHorizontal: 6,
                     borderRadius: 3,
                     fontSize: 14
                   }}
@@ -241,16 +241,16 @@ export default function App() {
                 />
 
                 {/* CONTRATO TÉCNICO: Botão Baixar com testID="btn-baixar" e parâmetro correto */}
-                <TouchableOpacity 
+                <TouchableOpacity
                   testID="btn-baixar"
                   style={{ paddingHorizontal: 12, paddingVertical: 8, backgroundColor: '#007bff', borderRadius: 3, marginRight: 15 }}
                   onPress={() => alterarQuantidade(item, valorDigitado)}
                 >
                   <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 14 }}>Baixar</Text>
                 </TouchableOpacity>
-                
+
                 {/* CONTRATO TÉCNICO: Botão Deletar com testID="btn-excluir" */}
-                <TouchableOpacity 
+                <TouchableOpacity
                   testID="btn-excluir"
                   style={{ padding: 4 }}
                   onPress={() => handleExcluir(item.id)}
@@ -267,7 +267,7 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
- container: {
+  container: {
     flex: 1,
     backgroundColor: '#f4f6f9',
     paddingTop: 60,
@@ -335,16 +335,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 14,
     borderRadius: 10,
-    marginBottom: 10, // Espaçamento entre os cards
+    marginBottom: 10,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.03,
     shadowRadius: 4,
     elevation: 1,
     borderLeftWidth: 4,
-    borderLeftColor: '#007bff', 
+    borderLeftColor: '#007bff',
   },
-  itemText: {
+  itemName: {
     fontSize: 16,
-  }
+    fontWeight: '600',
+    color: '#2d3748',
+  },
+  itemStock: {
+    fontSize: 14,
+    color: '#718096',
+    marginTop: 4,
+  },
 });
