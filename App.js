@@ -15,6 +15,7 @@ export default function App() {
   const [loading, setLoading] = useState(false);
   const [valoresAjuste, setValoresAjuste] = useState({});
   const [idEmEdicao, setIdEmEdicao] = useState(null);
+  const [busca, setBusca] = useState('');
 
   // --- Funções de Requisição e Efeitos ---
 
