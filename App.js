@@ -177,6 +177,21 @@ export default function App() {
           <Text style={styles.buttonText}>{idEmEdicao ? "Atualizar" : "Cadastrar"}</Text>
         </TouchableOpacity>
       </View>
+      <View style={styles.searchContainer}>
+        <TextInput 
+          testID="input-busca"
+          style={styles.searchInput}
+          placeholder="Buscar material..."
+          placeholderTextColor="#718096"
+          value={busca}
+          onChangeText={setBusca}
+        />
+        <View style={styles.totalBadge}>
+          <Text testID="total-itens" style={styles.totalText}>
+            Total: {materiaisFiltrados.length}
+          </Text>
+        </View>
+      </View>
 
       {/* Lista de estoque */}
       {/* Lista de estoque */}
@@ -186,7 +201,7 @@ export default function App() {
 
       <FlatList
         testID="lista-materials"
-        data={materiais}
+        data={materiaisFiltrados}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => {
           // Define a variável no escopo correto do renderItem
