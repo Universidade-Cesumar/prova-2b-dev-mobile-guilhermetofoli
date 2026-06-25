@@ -34,7 +34,11 @@ O sistema substitui os antigos rascunhos de papel e planilhas manuais por um apl
 - **Dashboard com Totalizador:** Contador fixado no topo da listagem que exibe em tempo real o número exato de itens exibidos com base no filtro aplicado (`testID="total-itens"`).
 - **Resiliência e Tratamento de Erros:** Blocos `try/catch` robustos em todas as operações HTTP (`GET`, `POST`, `PUT`, `DELETE`), exibindo mensagens amigáveis na tela caso ocorra instabilidade ou queda na conexão com a rede.
 
----
+## 🎨 Identidade Visual e Rodapé
+
+O sistema conta com um acabamento visual no rodapé para melhor aproveitamento do espaço em tela e identificação institucional:
+- **Design Clean:** Alinhamento centralizado com separadores sutis para visualização profissional tanto em Web quanto Mobile.
+- **Hierarquia de Cores:** Uso de cinza escuro (`#2d3748`) para destaque institucional e cinza médio (`#718096`) para informações secundárias de desenvolvimento.
 
 ## 🔧 Como Executar o Projeto
 
