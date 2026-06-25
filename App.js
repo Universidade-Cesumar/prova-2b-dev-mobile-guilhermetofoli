@@ -377,16 +377,17 @@ const styles = StyleSheet.create({
     color: '#2d3748',
   },
   btnBaixar: {
-    backgroundColor: '#ebf8ff', // Fundo azul bem clarinho e elegante
+    backgroundColor: '#ebf8ff',
     borderWidth: 1,
     borderColor: '#bee3f8',
-    paddingHorizontal: 12,
+    paddingHorizontal: 16,
     paddingVertical: 8,
     borderRadius: 6,
     marginLeft: 6,
     marginRight: 15,
     justifyContent: 'center',
     alignItems: 'center',
+    minWidth: 70,
   },
 
   searchContainer: {
@@ -417,5 +418,9 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: 'bold',
     fontSize: 14,
+  },
+  btnExcluir: {
+    padding: 8,
+    marginLeft: 10,
   },
 });
