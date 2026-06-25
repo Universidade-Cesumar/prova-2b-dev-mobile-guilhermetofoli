@@ -46,4 +46,20 @@ Siga os passos abaixo para clonar o repositório, instalar as dependências e ex
    cd seu-repositorio
 ```
 
-2. Instale as dependências do projeto:
+2. **Instale as dependências do projeto:**
+```
+npm install
+```
+
+3. **Rode a aplicação:**
+```
+npm start
+```
+* Ou rode por: 
+```
+npx expo start
+```
+
+4. **Acesse a aplicação:**
+* **No Navegador (Web):**  Pressione a tecla *"w"* no terminal para abrir o projeto diretamente no seu navegador.
+* **No Dispositivo Móvel:** Baixe o aplicativo Expo Go (disponível para Android e iOS) e leia o QR Code gerado no terminal.
