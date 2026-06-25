@@ -137,6 +137,10 @@ export default function App() {
     }
   };
 
+  const materiaisFiltrados = materiais.filter(item =>
+    item.nome.toLowerCase().includes(busca.toLowerCase())
+  );
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Almoxarifado - Enfermagem</Text>
