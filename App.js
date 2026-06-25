@@ -283,6 +283,15 @@ export default function App() {
           );
         }}
       />
+      {/* FOOTER: Adicionado para dar acabamento e identidade ao sistema */}
+      <View style={styles.footer}>
+        <Text style={styles.footerText}>
+          © 2026 SysAlmoxarifado • Hospital Central de Enfermagem
+        </Text>
+        <Text style={styles.footerSubtext}>
+          Desenvolvido para a Disciplina de Desenvolvimento Mobile
+        </Text>
+      </View>
     </View>
   );
 }
