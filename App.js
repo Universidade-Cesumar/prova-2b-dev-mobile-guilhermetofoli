@@ -146,8 +146,7 @@ export default function App() {
       <Text style={styles.title}>Almoxarifado - Enfermagem</Text>
 
       <Text style={styles.description}>
-        Este template servirá para desenvolver o projeto responsável por modernizar o controle de insumos médicos do almoxarifado.
-        Através desta interface conectada à API, é possível realizar o inventário em tempo real, cadastrar novos materiais e registrar baixas de estoque de forma ágil e segura.
+        Gerenciamento inteligente e controle de insumos médicos em tempo real. Monitore o inventário, cadastre novos materiais e registre movimentações de estoque com agilidade.
       </Text>
 
       {/* Inputs de cadastro */}
