@@ -6,25 +6,12 @@ O sistema substitui os antigos rascunhos de papel e planilhas manuais por um apl
 
 ---
 
-## 🛠️ O que foi implementado
+## 🛠️ Tecnologias e Bibliotecas Utilizadas
 
-- **CRUD Completo:** Listagem, cadastro, edição (ícone do lápis) e exclusão (ícone da lixeira) de materiais integrado com a MockAPI.
-- **Movimentação de Estoque:** Botões de `+` e `-` dinâmicos para somar ou subtrair a quantidade digitada no campo.
-- **Validações:** Bloqueio de letras no campo de quantidade e aviso em tempo real caso o estoque de algum item chegue a zero.
-- **Interface:** Uso de ícones vetoriais nativos do FontAwesome.
+- **React Native** (Interface nativa e responsiva)
+- **Expo** (Ambiente de desenvolvimento e build)
+- **MockAPI** (Persistência de dados através de serviços REST)
+- **Jest & Testing Library** (Estrutura de testes automatizados e assíncronos)
+- **Expo Vector Icons (FontAwesome)** (Identidade visual e ícones clínicos)
 
 ---
-
-## 🔧 Como rodar o projeto
-
-1. Instale as dependências:
-   ```bash
-   npm install
-   ```
-
-2. Inicie o servidor:
-    ```bash
-    npm start
-    ```
-
-3. Abra no navegador pressionando w no terminal
