@@ -28,6 +28,7 @@ export default function App() {
       setMateriais(data);
     } catch (err) {
       console.log("Erro no GET:", err);
+      alert("Não foi possível carregar os materiais. Verifique sua conexão com a rede.");
     } finally {
       setLoading(false);
     }
@@ -82,6 +83,7 @@ export default function App() {
       }
     } catch (err) {
       console.log("Erro no salvar:", err);
+      alert("Falha ao salvar as alterações no servidor. Tente novamente mais tarde.");
     }
   };
 
@@ -96,6 +98,7 @@ export default function App() {
       }
     } catch (err) {
       console.log("Erro no DELETE:", err);
+      alert("Erro ao tentar remover o material do servidor.");
     }
   };
 
@@ -134,6 +137,7 @@ export default function App() {
       }
     } catch (err) {
       console.log("Erro no PUT:", err);
+      alert("Não foi possível registrar a baixa no estoque. Falha de comunicação.");
     }
   };
 
