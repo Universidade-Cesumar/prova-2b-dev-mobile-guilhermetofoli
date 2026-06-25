@@ -211,7 +211,7 @@ export default function App() {
               {/* Lado Esquerdo: Nome e Quantidade de Estoque */}
               <View style={{ flex: 1 }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <Text style={[styles.itemText, { marginRight: 10, fontWeight: '500' }]}>{item.nome}</Text>
+                  <Text style={[styles.itemName, { marginRight: 10, fontWeight: '500' }]}>{item.nome}</Text>
 
                   <TouchableOpacity
                     style={{ padding: 4 }}
@@ -226,7 +226,7 @@ export default function App() {
                 </View>
 
                 <Text style={[
-                  styles.itemText,
+                  styles.itemStock,
                   { fontSize: 14, marginTop: 4 },
                   item.quantidade === 0 && { color: 'red', fontWeight: 'bold' }
                 ]}>
@@ -262,7 +262,7 @@ export default function App() {
                 {/* CONTRATO TÉCNICO: Botão Deletar com testID="btn-excluir" */}
                 <TouchableOpacity
                   testID="btn-excluir"
-                  style={{ padding: 4 }}
+                  style={styles.btnExcluir}
                   onPress={() => handleExcluir(item.id)}
                 >
                   <FontAwesome name="trash" size={18} color="red" />
