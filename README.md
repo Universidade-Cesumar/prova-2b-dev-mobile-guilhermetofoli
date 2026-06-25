@@ -33,3 +33,17 @@ O sistema substitui os antigos rascunhos de papel e planilhas manuais por um apl
 - **Indicador de Estoque Crítico:** Alerta visual que altera o fundo e a borda do cartão do material para tons de vermelho claro quando a quantidade em estoque é menor que 10 unidades (`accessibilityLabel="estoque-critico"`).
 - **Dashboard com Totalizador:** Contador fixado no topo da listagem que exibe em tempo real o número exato de itens exibidos com base no filtro aplicado (`testID="total-itens"`).
 - **Resiliência e Tratamento de Erros:** Blocos `try/catch` robustos em todas as operações HTTP (`GET`, `POST`, `PUT`, `DELETE`), exibindo mensagens amigáveis na tela caso ocorra instabilidade ou queda na conexão com a rede.
+
+---
+
+## 🔧 Como Executar o Projeto
+
+Siga os passos abaixo para clonar o repositório, instalar as dependências e executar o projeto em ambiente de desenvolvimento:
+
+1. **Clone o repositório:**
+```
+   git clone [https://github.com/seu-usuario/seu-repositorio.git](https://github.com/seu-usuario/seu-repositorio.git)
+   cd seu-repositorio
+```
+
+2. Instale as dependências do projeto:
