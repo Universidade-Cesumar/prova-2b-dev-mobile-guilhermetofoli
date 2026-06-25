@@ -205,8 +205,16 @@ export default function App() {
           // Define a variável no escopo correto do renderItem
           const valorDigitado = valoresAjuste[item.id] || '';
 
+          const ehCritico = item.quantidade < 10;
+
           return (
-            <View style={styles.itemRow}>
+            <View 
+              style={[
+                styles.itemRow, 
+                ehCritico && { backgroundColor: '#fff5f5', borderLeftColor: '#e53e3e' }
+              ]}
+              accessibilityLabel={ehCritico ? "estoque-critico" : undefined}
+            >
               {/* Lado Esquerdo: Nome e Quantidade de Estoque */}
               <View style={{ flex: 1 }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
