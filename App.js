@@ -283,7 +283,7 @@ export default function App() {
           );
         }}
       />
-      {/* FOOTER: Adicionado para dar acabamento e identidade ao sistema */}
+      {/* FOOTER */}
       <View style={styles.footer}>
         <Text style={styles.footerText}>
           © 2026 SysAlmoxarifado • Hospital Central de Enfermagem
@@ -459,5 +459,17 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 1,
     marginBottom: 15,
+  },
+  footerText: {
+    fontSize: 13,
+    color: '#2d3748', 
+    fontWeight: '600',
+    letterSpacing: 0.3,
+  },
+  footerSubtext: {
+    fontSize: 11,
+    color: '#718096',
+    marginTop: 4,
+    fontWeight: '400',
   },
 });
