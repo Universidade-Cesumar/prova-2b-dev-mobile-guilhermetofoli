@@ -194,7 +194,6 @@ export default function App() {
       </View>
 
       {/* Lista de estoque */}
-      {/* Lista de estoque */}
       {loading && (
         <ActivityIndicator size="small" color="#000" style={{ marginBottom: 10 }} />
       )}
@@ -388,5 +387,35 @@ const styles = StyleSheet.create({
     marginRight: 15,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+
+  searchContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 15,
+    justifyContent: 'space-between',
+  },
+  searchInput: {
+    flex: 1,
+    backgroundColor: '#fff',
+    borderWidth: 1,
+    borderColor: '#e2e8f0',
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 8,
+    marginRight: 10,
+    fontSize: 14,
+    color: '#2d3748',
+  },
+  totalBadge: {
+    backgroundColor: '#2b6cb0',
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    borderRadius: 8,
+  },
+  totalText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 14,
   },
 });
