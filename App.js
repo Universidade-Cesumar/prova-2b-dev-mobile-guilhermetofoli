@@ -292,6 +292,8 @@ export default function App() {
           Desenvolvido para a Disciplina de Desenvolvimento Mobile
         </Text>
       </View>
+
+      
     </View>
   );
 }
