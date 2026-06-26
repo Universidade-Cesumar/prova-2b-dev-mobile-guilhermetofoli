@@ -92,7 +92,18 @@ O fluxo de entrada de novos insumos médicos funciona da seguinte forma:
 
 ---
 
-### 🔎 3. Busca e Filtragem de Itens
+### ✏️ 3. Editar/Atualizar Item Existente
+Caso seja necessário corrigir o nome ou o saldo de um material já cadastrado:
+1. O operador localiza o item na lista e clica no ícone de **Lápis Cinza** ao lado do nome do material.
+2. O sistema carrega os dados atuais de volta para os campos do formulário no topo.
+3. O botão principal muda dinamicamente sua interface: altera a cor para verde e o texto para **"Atualizar"**, dando um feedback visual claro de que o sistema está em modo de edição.
+4. Após realizar as alterações, basta clicar em **"Atualizar"** para disparar uma requisição `PUT` e salvar os novos dados na API.
+
+![Formulário em Modo de Edição](./screenshots/atualizar.png)
+
+---
+
+### 🔎 4. Busca e Filtragem de Itens
 Para localizar insumos de forma rápida em momentos de alta demanda na enfermagem:
 - O usuário digita o termo desejado no campo **"Buscar material..."**.
 - A listagem aplica um filtro em tempo real por correspondência de nome (`testID="input-busca"`).
