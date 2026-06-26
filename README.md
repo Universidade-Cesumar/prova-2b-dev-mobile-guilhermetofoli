@@ -67,3 +67,54 @@ npx expo start
 4. **Acesse a aplicação:**
 * **No Navegador (Web):**  Pressione a tecla *"w"* no terminal para abrir o projeto diretamente no seu navegador.
 * **No Dispositivo Móvel:** Baixe o aplicativo Expo Go (disponível para Android e iOS) e leia o QR Code gerado no terminal.
+
+---
+---
+
+## 📱 Guia de Funcionamento do Sistema
+
+Esta seção apresenta o fluxo de uso da aplicação, partindo de uma visão macro do painel e detalhando cada operação essencial de gerenciamento de insumos.
+
+### 🔍 1. Visão Geral do Painel (Dashboard)
+A tela principal foi projetada para centralizar o controle do almoxarifado em uma única interface responsiva. No topo, encontra-se o formulário de entrada; ao centro, a barra de pesquisa inteligente com o indicador do total de itens; e abaixo, a listagem dinâmica que sinaliza visualmente a saúde do estoque.
+
+![Visão Geral do Sistema](./screenshots/visao-geral.png)
+
+---
+
+### 📥 2. Adicionar Novo Item (Cadastro)
+O fluxo de entrada de novos insumos médicos funciona da seguinte forma:
+1. O operador insere o nome no campo **"Nome do Material"**.
+2. Digita o saldo inicial no campo **"Quantidade"**.
+3. Ao clicar no botão **"Cadastrar"**, o aplicativo valida os dados, realiza uma requisição `POST` para o servidor MockAPI e insere o item no topo da listagem de forma síncrona.
+
+![Formulário de Cadastro](./screenshots/cadastro.png)
+
+---
+
+### 🔎 3. Busca e Filtragem de Itens
+Para localizar insumos de forma rápida em momentos de alta demanda na enfermagem:
+- O usuário digita o termo desejado no campo **"Buscar material..."**.
+- A listagem aplica um filtro em tempo real por correspondência de nome (`testID="input-busca"`).
+- O totalizador fixado à direita (`testID="total-itens"`) recalcula instantaneamente para exibir apenas a contagem dos itens visíveis.
+
+![Filtro](./screenshots/filtro.png)
+
+---
+
+### 📉 4. Movimentação e Baixa de Estoque
+Para registrar a retirada de materiais para uso clínico:
+1. O usuário digita a quantidade a ser removida no campo **"Qtd."** contido no card do material.
+2. Clica no botão **"Baixar"**.
+3. O sistema roda as funções puras de validação. Se o saldo for suficiente, a dedução é feita. Caso o estoque atinja valores menores que 10, o card ganha um fundo vermelho claro de **Estoque Crítico** (`accessibilityLabel="estoque-critico"`). Se zerar, exibe o alerta **"Estoque: 0"** em negrito.
+
+![Filtro](./screenshots/estoque0.png)
+
+---
+
+### 🗑️ 5. Excluir Item do Catálogo
+Quando um insumo deixa de fazer parte do inventário oficial:
+1. O operador localiza o card correspondente e clica no ícone de **Lixeira Vermelha**.
+2. A aplicação dispara uma requisição `DELETE` para a API, removendo o registro do banco de dados e limpando o componente da tela imediatamente.
+
+![Remoção de item da listagem](./screenshots/excluir.png)
